@@ -11,5 +11,12 @@ CUSTOM_PLATFORM_VERSION := 14.0
 CUSTOM_VERSION := tpp_$(CUSTOM_BUILD)-$(CUSTOM_PLATFORM_VERSION)-$(CUSTOM_BUILD_DATE)
 CUSTOM_VERSION_PROP := fourteen
 
-# signing
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.custom.build.date=$(BUILD_DATE) \
+    ro.custom.device=$(CUSTOM_BUILD) \
+    ro.custom.fingerprint=$(ROM_FINGERPRINT) \
+    ro.custom.version=$(CUSTOM_VERSION) \
+    ro.modversion=$(CUSTOM_VERSION)
+
+# Signing
 -include vendor/lineage-priv/keys/keys.mk
