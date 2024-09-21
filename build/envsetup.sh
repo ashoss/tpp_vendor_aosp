@@ -9,6 +9,11 @@ function check_product()
         echo "Couldn't locate the top of the tree. Try setting TOP." >&2
         return
     fi
+
+    local T=$(gettop)
+    $T/prebuilts/build-tools/linux-x86/bin/py3-cmd $T/vendor/aosp/build/tools/barista.py $product
+    source_vendorsetup &>/dev/null
+
     if (echo -n $1 | grep -q -e "^aosp_") ; then
         CUSTOM_BUILD=$(echo -n $1 | sed -e 's/^aosp_//g')
     else
