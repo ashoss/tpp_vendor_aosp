@@ -44,4 +44,17 @@
     <string name="config_bt_slice_extra_pending_intent">com.google.android.gms.nearby.discovery.EXTRA_PENDING_INTENT</string>
     <string name="config_bt_slice_intent_action">com.google.android.gms.nearby.discovery.ACTION_LOG_SLICE_AND_LAUNCH_INTENT</string>
     <string name="config_bt_slice_pending_intent_action">com.google.android.gms.nearby.discovery.ACTION_LOG_SLICE_AND_SEND_PENDING_INTENT</string>
+
+    <!-- Package Installer package name -->
+    <string name="config_package_installer_package_name" translatable="false">
+        com.google.android.packageinstaller
+    </string>
+    <!-- Sound picker package name -->
+    <string name="config_sound_picker_package_name" translatable="false">
+        com.google.android.soundpicker
+    </string>
+    <!-- Contacts package name -->
+    <string name="config_contacts_package_name" translatable="false">
+        com.google.android.contacts
+    </string>
 </resources>
