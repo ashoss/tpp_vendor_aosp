@@ -2,7 +2,13 @@
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 
 # Google Apps
+WITH_GMS ?= true
+ifeq ($(WITH_GMS),true)
 $(call inherit-product, vendor/gms/products/gms.mk)
+else
+PRODUCT_PACKAGES += \
+    LatinIME
+endif
 
 PRODUCT_BRAND ?= PixelProject
 
