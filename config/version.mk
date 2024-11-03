@@ -9,17 +9,6 @@ CUSTOM_BUILD_DATE := $(CUSTOM_DATE_YEAR)$(CUSTOM_DATE_MONTH)$(CUSTOM_DATE_DAY)-$
 CUSTOM_PLATFORM_VERSION := 15.0
 CUSTOM_DISPLAY_VERSION := 1.0
 
-# Guidelines for setting tpp Build ID:
-#  - VR1  = V Release 1
-#  - 35   = API Level 35
-#  - OSR  = Open Source Release
-#  - DEV  = Dev Release
-#  - RF00 = Production Release 00
-#  - BETA00 = BETA Release 00
-#  - JAN = Month placeholder
-
-CUSTOM_BUILD_ID := VR1.35.DEV.FEB.BETA01
-
 CUSTOM_BUILDTYPE ?= UNOFFICIAL
 
 CUSTOM_VERSION := tpp_$(CUSTOM_DISPLAY_VERSION)-$(CUSTOM_BUILD)-$(CUSTOM_PLATFORM_VERSION)-$(CUSTOM_BUILDTYPE)-$(CUSTOM_BUILD_DATE)
@@ -33,9 +22,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.custom.releasetype=$(CUSTOM_BUILDTYPE) \
     ro.custom.version=$(CUSTOM_VERSION) \
     ro.modversion=$(CUSTOM_VERSION)
-
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.custom.build.id=$(CUSTOM_BUILD_ID)
 
 # Signing
 -include vendor/lineage-priv/keys/keys.mk
