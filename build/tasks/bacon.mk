@@ -24,4 +24,5 @@ bacon: $(DEFAULT_GOAL) $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CUSTOM_TARGET_PACKAGE)
 	$(hide) $(MD5) $(CUSTOM_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CUSTOM_TARGET_PACKAGE).md5sum
 	$(hide) ./vendor/aosp/build/tools/createjson.sh $(TARGET_DEVICE) $(PRODUCT_OUT) $(CUSTOM_VERSION).zip
+	$(hide) bash vendor/aosp/build/tools/tpp_ascii.sh
 	@echo "Package Complete: $(CUSTOM_TARGET_PACKAGE)" >&2
