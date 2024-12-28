@@ -1,0 +1,50 @@
+name: Update CertifiedPropsOverlay XML from JSON
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-xml:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Fetch JSON File
+        run: |
+          curl -s -o pif.json https://raw.githubusercontent.com/chiteroman/PlayIntegrityFix/main/module/pif.json
+
+      - name: Install jq and xmlstarlet
+        run: sudo apt-get update && sudo apt-get install -y jq xmlstarlet
+
+      - name: Update XML File
+        run: |
+          # Extract fields from JSON
+          FINGERPRINT=$(jq -r '.FINGERPRINT' pif.json)
+          MANUFACTURER=$(jq -r '.MANUFACTURER' pif.json)
+          MODEL=$(jq -r '.MODEL' pif.json)
+          PRODUCT=$(echo "$FINGERPRINT" | cut -d'/' -f2)
+          DEVICE=$(echo "$FINGERPRINT" | cut -d'/' -f1)
+          BRAND=$(echo "$FINGERPRINT" | cut -d'/' -f3 | cut -d':' -f1)
+
+          # Update the XML file
+          xmlstarlet ed -L \
+            -u "//item[contains(., 'PRODUCT:')]" -v "PRODUCT:$PRODUCT" \
+            -u "//item[contains(., 'DEVICE:')]" -v "DEVICE:$DEVICE" \
+            -u "//item[contains(., 'MANUFACTURER:')]" -v "MANUFACTURER:$MANUFACTURER" \
+            -u "//item[contains(., 'BRAND:')]" -v "BRAND:$BRAND" \
+            -u "//item[contains(., 'MODEL:')]" -v "MODEL:$MODEL" \
+            -u "//item[contains(., 'FINGERPRINT:')]" -v "FINGERPRINT:$FINGERPRINT" \
+            overlay/CertifiedPropsOverlay/res/values/config.xml
+
+      - name: Commit and Push Changes
+        run: |
+          DATE=$(date '+%Y-%m-%d')
+          git config user.name "sajidshahriar72543"
+          git config user.email "sazidshahriar39@gmail.com"
+          git add overlay/CertifiedPropsOverlay/res/values/config.xml
+          git commit -m "Update CertifiedPropsOverlay config.xml from JSON file on $DATE"
+          git push https://$TOKEN@github.com/aospb-staging/vendor_aosp.git HEAD:15.1
+        env:
+          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
