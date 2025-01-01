@@ -53,7 +53,7 @@ function breakfast()
         else
             # This is probably just the custom model name
             if [ -z "$variant" ]; then
-                variant="userdebug"
+                variant="user"
             fi
 
             lunch aosp_$target-$aosp_target_release-$variant
