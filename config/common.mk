@@ -245,7 +245,6 @@ PRODUCT_PACKAGE_OVERLAYS += \
     vendor/aosp/overlay/common
 
 PRODUCT_PACKAGES += \
-    AndroidBlackThemeOverlay \
     CertifiedPropsOverlay \
     CustomFontPixelLauncherOverlay \
     DocumentsUIOverlay \
