@@ -27,7 +27,7 @@ EXTRA_MANIFESTS_DIR = Path(".repo/manifests")
 UPSTREAM_MANIFEST_PATH = Path(".repo/manifest.xml")
 LOCAL_MANIFESTS_DIR = Path(".repo/local_manifests")
 BARISTA_BLEND_PATH = LOCAL_MANIFESTS_DIR / "baristablend.xml"
-BARISTA_BEANS_PATH = "vendor/aosp/products/{}/beans.xml"
+BARISTA_BEANS_PATH = "vendor/products/{}_beans.xml"
 
 
 def sort_manifest(manifest: Element) -> None:
