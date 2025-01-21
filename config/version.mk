@@ -1,4 +1,5 @@
-CUSTOM_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
+CUSTOM_BUILD_DATE := $(shell date -u +%Y%m%d)
+CUSTOM_BUILD_DATETIME := $(shell date -u +%Y%m%d-%H%M)
 
 # Signing
 ifeq ($(IS_SIGNED),true)
@@ -18,7 +19,7 @@ CUSTOM_VERSION_PROP := fifteen
 
 PRODUCT_SYSTEM_PROPERTIES += \
     ro.custom.build.date=$(CUSTOM_BUILD_DATE) \
-    ro.custom.build.version=$(CUSTOM_DISPLAY_VERSION) \
+    ro.custom.build.datetime=$(CUSTOM_BUILD_DATETIME) \
     ro.custom.device=$(CUSTOM_BUILD) \
     ro.custom.fingerprint=$(ROM_FINGERPRINT) \
     ro.custom.maintainer=$(CUSTOM_MAINTAINER) \
