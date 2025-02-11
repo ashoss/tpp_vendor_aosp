@@ -225,17 +225,17 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
 endif
 
 # Root
-# PRODUCT_PACKAGES += \
-#     adb_root
-# ifneq ($(TARGET_BUILD_VARIANT),user)
-# ifeq ($(WITH_SU),true)
-# PRODUCT_PACKAGES += \
-#     su
+PRODUCT_PACKAGES += \
+    adb_root
+ifneq ($(TARGET_BUILD_VARIANT),user)
+ifeq ($(WITH_SU),true)
+PRODUCT_PACKAGES += \
+    su
 
-# PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-#     system/xbin/su
-# endif
-# endif
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/xbin/su
+endif
+endif
 
 # SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
