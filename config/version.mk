@@ -25,4 +25,5 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.custom.maintainer=$(CUSTOM_MAINTAINER) \
     ro.custom.releasetype=$(CUSTOM_BUILDTYPE) \
     ro.custom.showversion=$(CUSTOM_SHOW_VERSION) \
-    ro.custom.version=$(CUSTOM_VERSION) 
+    ro.custom.version=$(CUSTOM_VERSION) \
+    ro.custom.incremental=$(CUSTOM_PLATFORM_VERSION)$(CUSTOM_INCREMENTAL) 
