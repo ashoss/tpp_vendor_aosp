@@ -15,6 +15,6 @@ ADDITIONAL_SYSTEM_PROPERTIES += \
 # Updater
 ifeq ($(IS_OFFICIAL),true)
     ADDITIONAL_SYSTEM_PROPERTIES  += \
-        net.pixelos.build_type=ci \
-        net.pixelos.version=$(CUSTOM_VERSION_PROP)
+        net.tpp.build_type=ci \
+        net.tpp.version=$(CUSTOM_VERSION_PROP)
 endif

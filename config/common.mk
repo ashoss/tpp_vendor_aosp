@@ -4,7 +4,7 @@ $(call inherit-product-if-exists, vendor/extra/product.mk)
 # Google Apps
 $(call inherit-product, vendor/gms/products/gms.mk)
 
-PRODUCT_BRAND ?= PixelOS
+PRODUCT_BRAND ?= PixelProject
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
@@ -65,18 +65,18 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:$(TARGET_COPY_OUT_PRODUCT)/usr/keylayout/Vendor_045e_Product_0719.kl
 
 # Face Unlock
-TARGET_FACE_UNLOCK_SUPPORTED ?= $(TARGET_SUPPORTS_64_BIT_APPS)
+# TARGET_FACE_UNLOCK_SUPPORTED ?= $(TARGET_SUPPORTS_64_BIT_APPS)
 
-ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
-PRODUCT_PACKAGES += \
-    ParanoidSense
+# ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
+# PRODUCT_PACKAGES += \
+ #    ParanoidSense
 
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-    ro.face.sense_service=true
+# PRODUCT_SYSTEM_EXT_PROPERTIES += \
+#    ro.face.sense_service=true
 
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
-endif
+# PRODUCT_COPY_FILES += \
+#    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
+# endif
 
 # Enforce privapp-permissions whitelist
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -129,8 +129,8 @@ endif
 include vendor/aosp/config/bootanimation.mk
 
 # BtHelper
-PRODUCT_PACKAGES += \
-    BtHelper
+# PRODUCT_PACKAGES += \
+#     BtHelper
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -188,8 +188,8 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.storage_manager.enabled=true
 
 # TouchGestures
-PRODUCT_PACKAGES += \
-    TouchGestures
+# PRODUCT_PACKAGES += \
+ #    TouchGestures
 
 # These packages are excluded from user builds
 PRODUCT_PACKAGES_DEBUG += \
@@ -201,17 +201,17 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
 endif
 
 # Root
-PRODUCT_PACKAGES += \
-    adb_root
-ifneq ($(TARGET_BUILD_VARIANT),user)
-ifeq ($(WITH_SU),true)
-PRODUCT_PACKAGES += \
-    su
+# PRODUCT_PACKAGES += \
+#     adb_root
+# ifneq ($(TARGET_BUILD_VARIANT),user)
+# ifeq ($(WITH_SU),true)
+# PRODUCT_PACKAGES += \
+#     su
 
-PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-    system/xbin/su
-endif
-endif
+# PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+#     system/xbin/su
+# endif
+# endif
 
 # SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
