@@ -41,10 +41,10 @@ jobs:
       - name: Commit and Push Changes
         run: |
           DATE=$(date '+%Y-%m-%d')
-          git config user.name "sajidshahriar72543"
-          git config user.email "sazidshahriar39@gmail.com"
+          git config user.name "MODEDGES"
+          git config user.email "ofwargame30@gmail.com"
           git add overlay/CertifiedPropsOverlay/res/values/config.xml
           git commit -m "Update CertifiedPropsOverlay config.xml from JSON file on $DATE"
-          git push https://$TOKEN@github.com/aospb-staging/vendor_aosp.git HEAD:15.1
+          git push https://$TOKEN@github.com/TPP-Labs/vendor_aosp.git HEAD:15.1
         env:
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
