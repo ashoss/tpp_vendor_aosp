@@ -15,45 +15,87 @@
 # limitations under the License.
 #
 
-#$1=TARGET_DEVICE, $2=PRODUCT_OUT, $3=FILE_NAME
-output=$2/$1.json
+# Ensure all required arguments are passed
+if [[ $# -ne 3 ]]; then
+    echo "Usage: $0 <TARGET_DEVICE> <PRODUCT_OUT> <FILE_NAME>"
+    exit 1
+fi
 
-# Cleanup old file
-if [ -f "$output" ]; then
-	rm "$output"
+TARGET_DEVICE=$1
+PRODUCT_OUT=$2
+FILE_NAME=$3
+OUTPUT_FILE="$PRODUCT_OUT/$TARGET_DEVICE.json"
+
+# Ensure the output directory exists
+mkdir -p "$PRODUCT_OUT"
+
+# Check if the directory is writable
+if [[ ! -w "$PRODUCT_OUT" ]]; then
+    echo "Warning: No write permissions for $PRODUCT_OUT"
+
+    # Suggest an alternative writable directory
+    ALT_DIR="$HOME/$TARGET_DEVICE-builds"
+    mkdir -p "$ALT_DIR"
+
+    if [[ -w "$ALT_DIR" ]]; then
+        echo "You don't have permissions to write to $PRODUCT_OUT."
+        echo "Using an alternative writable directory: $ALT_DIR"
+        PRODUCT_OUT="$ALT_DIR"
+        OUTPUT_FILE="$PRODUCT_OUT/$TARGET_DEVICE.json"
+    else
+        echo "Error: No writable directories found. Please run the script in a directory where you have write access."
+        exit 1
+    fi
+fi
+
+# Cleanup old file if it exists
+if [[ -f "$OUTPUT_FILE" ]]; then
+    rm "$OUTPUT_FILE"
 fi
 
 echo "Generating JSON file data for OTA support..."
 
-# Check if filename contains "UNOFFICIAL" and exit if true
-if [[ "$3" == *"UNOFFICIAL"* ]]; then
+# Check if the filename contains "UNOFFICIAL" and exit if true
+if [[ "$FILE_NAME" == *"UNOFFICIAL"* ]]; then
     echo "Skipping JSON generation as the build is marked UNOFFICIAL."
     exit 0
 fi
 
-# Set romtype to OFFICIAL since we’ve confirmed it’s not UNOFFICIAL
-romtype="OFFICIAL"
+# Set romtype to OFFICIAL
+ROM_TYPE="OFFICIAL"
 
-# Generate JSON data
-buildprop="$2/system/build.prop"
-linenr=`grep -n "ro.build.date.utc" "$buildprop" | cut -d':' -f1`
-datetime=`sed -n "$linenr"p < "$buildprop" | cut -d'=' -f2`
-filename="$3"
-id=`sha256sum "$2/$3" | cut -d' ' -f1`
-size=`stat -c "%s" "$2/$3"`
+# Ensure build.prop exists
+BUILD_PROP="$PRODUCT_OUT/system/build.prop"
+if [[ ! -f "$BUILD_PROP" ]]; then
+    echo "Error: build.prop not found in $BUILD_PROP"
+    exit 1
+fi
+
+# Extract required information
+DATETIME=$(grep "ro.build.date.utc" "$BUILD_PROP" | cut -d'=' -f2)
+if [[ -z "$DATETIME" ]]; then
+    echo "Error: Unable to extract datetime from build.prop"
+    exit 1
+fi
+
+FILENAME="$FILE_NAME"
+ID=$(sha256sum "$PRODUCT_OUT/$FILE_NAME" | cut -d' ' -f1)
+SIZE=$(stat -c "%s" "$PRODUCT_OUT/$FILE_NAME")
 
 # Create JSON output
-echo '{
+cat <<EOF > "$OUTPUT_FILE"
+{
   "response": [
     {
-      "datetime": '"$datetime"',
-      "filename": "'"$filename"'",
-      "id": "'"$id"'",
-      "romtype": "'"$romtype"'",
-      "size": '"$size"',
-      "url": "https://sourceforge.net/projects/pixel-project/files/'"$1"'/'"$3"'/download"
+      "datetime": $DATETIME,
+      "filename": "$FILENAME",
+      "id": "$ID",
+      "romtype": "$ROM_TYPE",
+      "size": $SIZE,
+      "url": "https://sourceforge.net/projects/pixel-project/files/$TARGET_DEVICE/$FILE_NAME/download"
     }
   ]
-}' >> "$output"
+}
+EOF
 
-echo "JSON file generated successfully at $output"
+echo "JSON file generated successfully at $OUTPUT_FILE"
