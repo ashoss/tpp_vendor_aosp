@@ -27,7 +27,7 @@ CL_GRN="\033[32m"
 bacon: $(DEFAULT_GOAL) $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CUSTOM_TARGET_PACKAGE)
 	$(hide) $(SHA256) $(CUSTOM_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CUSTOM_TARGET_PACKAGE).sha256sum
-	$(hide) ./vendor/aosp/build/tools/createjson.sh $(TARGET_DEVICE) $(PRODUCT_OUT) $(CUSTOM_VERSION).zip
+	$(hide) bash vendor/aosp/build/tools/createjson.sh $(TARGET_DEVICE) $(PRODUCT_OUT) $(CUSTOM_VERSION).zip
 	$(hide) bash vendor/aosp/build/tools/tpp_ascii.sh
 	echo -e ${CL_BLD}${CL_RED}"===============================-Package complete-==============================="${CL_RED}
 	echo -e ${CL_BLD}${CL_GRN}"Zip: "${CL_RED} $(CUSTOM_TARGET_PACKAGE)${CL_RST}
